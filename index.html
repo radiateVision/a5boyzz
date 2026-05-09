@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A5 Boyzz</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Toggle sidebar">&#9776;</button>
+    <div class="sidebar-brand">
+      <a class="sidebar-logo" href="index.html">A5 Boyzz 🏠</a>
+      <div class="sidebar-sub">Flat A5 &mdash; Since July 2022</div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="index.html" class="active">
+        <span class="nav-icon">🏠</span><span class="nav-label">Home</span>
+      </a>
+      <a href="guest.html">
+        <span class="nav-icon">👋</span><span class="nav-label">Guests</span>
+      </a>
+      <a href="games.html">
+        <span class="nav-icon">🎮</span><span class="nav-label">Games</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">Built with ❤️ by A5 squad</div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main" id="main">
+
+    <section class="hero">
+      <div class="years-badge">📅 Together since July 2022 &mdash; going strong</div>
+      <h1>Welcome to<br /><span id="flat-name">A5 Boyzz</span></h1>
+      <p id="flat-tagline">Four walls, one tribe.</p>
+    </section>
+
+    <div class="section">
+      <h2 class="section-title">The Crew</h2>
+      <p class="section-subtitle">Four legends, one flat.</p>
+      <div class="crew-grid" id="crew-grid"></div>
+    </div>
+
+    <div class="section">
+      <div class="party-banner">
+        <span class="party-emoji">🎉</span>
+        <div>
+          <div class="party-title">Party animals since 2022</div>
+          <div class="party-sub">Our parties don't have an end time. 24 hours? Just getting started.</div>
+        </div>
+        <span class="party-emoji">🍻</span>
+      </div>
+    </div>
+
+    <footer>
+      <p><span id="footer-flat"></span> &bull; A5 Boyzz Portal</p>
+    </footer>
+  </div>
+
+  <script>
+    // Sidebar collapse
+    const sidebar = document.getElementById('sidebar');
+    const toggle  = document.getElementById('sidebar-toggle');
+    const main    = document.getElementById('main');
+
+    toggle.addEventListener('click', () => {
+      const collapsed = sidebar.classList.toggle('collapsed');
+      document.body.classList.toggle('sidebar-collapsed', collapsed);
+      localStorage.setItem('sidebarCollapsed', collapsed);
+    });
+
+    if (localStorage.getItem('sidebarCollapsed') === 'true') {
+      sidebar.classList.add('collapsed');
+      document.body.classList.add('sidebar-collapsed');
+    }
+
+    // Data
+    async function loadData() {
+      const res = await fetch('data/roommates.json');
+      return res.json();
+    }
+
+    function renderCrew(roommates) {
+      document.getElementById('crew-grid').innerHTML = roommates.map(r => `
+        <div class="crew-card ${r.isLeader ? 'leader' : ''}">
+          ${r.isLeader ? '<div class="leader-badge">👑 Team Leader</div>' : ''}
+          <div class="crew-avatar">
+            <img src="${r.avatar}" alt="${r.name}" />
+          </div>
+          <div class="crew-name">${r.emoji} ${r.name}</div>
+          <div class="crew-nickname">"${r.nickname}"</div>
+          <div class="crew-role">${r.role}</div>
+          <div class="crew-bio">${r.bio}</div>
+        </div>
+      `).join('');
+    }
+
+    loadData().then(data => {
+      document.getElementById('flat-name').textContent = data.flat.name;
+      document.getElementById('flat-tagline').textContent = data.flat.tagline;
+      document.getElementById('footer-flat').textContent = data.flat.location;
+      renderCrew(data.roommates);
+    });
+  </script>
+
+</body>
+</html>

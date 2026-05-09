@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Games &mdash; A5 Boyzz</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <button class="sidebar-toggle" id="sidebar-toggle" title="Toggle sidebar">&#9776;</button>
+    <div class="sidebar-brand">
+      <a class="sidebar-logo" href="index.html">A5 Boyzz 🏠</a>
+      <div class="sidebar-sub">Flat A5 &mdash; Since July 2022</div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="index.html">
+        <span class="nav-icon">🏠</span><span class="nav-label">Home</span>
+      </a>
+      <a href="guest.html">
+        <span class="nav-icon">👋</span><span class="nav-label">Guests</span>
+      </a>
+      <a href="games.html" class="active">
+        <span class="nav-icon">🎮</span><span class="nav-label">Games</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">Built with ❤️ by A5 squad</div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main" id="main">
+    <div class="page-wrap">
+
+      <div class="page-header">
+        <h1>🎮 Games</h1>
+        <p>Track scores, settle debates, declare champions.</p>
+      </div>
+
+      <div class="coming-soon">
+        <div class="cs-icon">🚧</div>
+        <h2>Coming Soon</h2>
+        <p>Leaderboards, score tracking, and squad challenges on the way.</p>
+      </div>
+
+    </div>
+
+    <footer>
+      <p>A5 Boyzz Portal</p>
+    </footer>
+  </div>
+
+  <script>
+    const sidebar = document.getElementById('sidebar');
+    document.getElementById('sidebar-toggle').addEventListener('click', () => {
+      const collapsed = sidebar.classList.toggle('collapsed');
+      document.body.classList.toggle('sidebar-collapsed', collapsed);
+      localStorage.setItem('sidebarCollapsed', collapsed);
+    });
+    if (localStorage.getItem('sidebarCollapsed') === 'true') {
+      sidebar.classList.add('collapsed');
+      document.body.classList.add('sidebar-collapsed');
+    }
+  </script>
+
+</body>
+</html>
